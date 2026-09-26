@@ -21,7 +21,7 @@ The build generates `dist/index.html` with the main sections already rendered as
 - `public/robots.txt` allows crawling and points to `https://saraviasoftware.com/sitemap.xml`.
 - `public/sitemap.xml` contains only `https://saraviasoftware.com/`.
 - `public/favicon.svg` uses the brand symbol; `public/apple-touch-icon.png` reuses the supplied official logo.
-- **Before sharing the site:** create `public/og-image.jpg` with an official Saravia Software design at 1200 × 630 pixels. The metadata already points to `https://saraviasoftware.com/og-image.jpg`; social previews will not have an image until that file is published.
+- `public/og-image.png` is a 1200 × 630 social preview made from the supplied brand image. It preserves the original logo and typography, and is served at `https://saraviasoftware.com/og-image.png`.
 
 The hero and example illustrations are built with HTML, SVG, and CSS. DM Sans, Manrope, and Geist Mono load from Google Fonts. The official WhatsApp and Instagram URLs are configured in `src/config.ts`.
 
@@ -42,8 +42,7 @@ Import this directory as a Vite project. Use `npm run build` as the build comman
 
 ## Manual checklist after deployment
 
-- [ ] Publish the official `public/og-image.jpg` image at 1200 × 630 pixels.
 - [ ] Connect `saraviasoftware.com` in Vercel and confirm HTTPS works.
 - [ ] Add and verify the domain in Google Search Console.
 - [ ] Submit `/sitemap.xml` and request indexing for the home page.
-- [ ] Validate `Organization` with Google Rich Results Test and review the social preview.
+- [ ] Validate `Organization` with Google Rich Results Test and review the social preview with the published `og-image.png`.
