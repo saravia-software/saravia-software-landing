@@ -1,10 +1,10 @@
 # Saravia Software
 
-Landing oficial de Saravia Software, desarrollada con React, TypeScript, Vite y Tailwind CSS. La URL pública principal es `https://saraviasoftware.com/`.
+The official Saravia Software landing page, built with React, TypeScript, Vite, and Tailwind CSS. Its primary public URL is `https://saraviasoftware.com/`.
 
-## Desarrollo
+## Development
 
-Requiere Node.js 22.12 o superior. Si usás nvm, ejecutá `nvm use` antes de instalar las dependencias.
+Requires Node.js 22.12 or later. If you use nvm, run `nvm use` before installing dependencies.
 
 ```bash
 npm install
@@ -13,38 +13,37 @@ npm run lint
 npm run build
 ```
 
-El build genera `dist/index.html` con las secciones principales ya renderizadas como HTML. React se conecta a ese contenido para conservar el menú, el cambio de idioma y las demás interacciones. El idioma inicial del HTML publicado es español; la selección en inglés se aplica en el navegador si la persona ya la había guardado.
+The build generates `dist/index.html` with the main sections already rendered as HTML. React hydrates that content to enable the menu, language switcher, and other interactions. The published HTML starts in Spanish; a previously saved English preference is applied in the browser.
 
-## SEO y recursos de marca
+## SEO and brand assets
 
-- `index.html` contiene el título, la descripción, la URL canónica, Open Graph, Twitter/X Card y los datos estructurados `Organization` sin depender de JavaScript.
-- `public/robots.txt` permite rastrear la landing e indica `https://saraviasoftware.com/sitemap.xml`.
-- `public/sitemap.xml` incluye solamente `https://saraviasoftware.com/`.
-- `public/favicon.svg` usa el símbolo de la marca; `public/apple-touch-icon.png` reutiliza el logo real suministrado.
-- **Pendiente antes de compartir la web:** crear `public/og-image.jpg` con una composición oficial de Saravia Software de 1200 × 630 píxeles. La metadata ya apunta a `https://saraviasoftware.com/og-image.jpg`; hasta que se publique ese archivo, la vista previa social no tendrá imagen.
+- `index.html` includes the title, description, canonical URL, Open Graph and Twitter/X Card metadata, and `Organization` structured data without relying on JavaScript.
+- `public/robots.txt` allows crawling and points to `https://saraviasoftware.com/sitemap.xml`.
+- `public/sitemap.xml` contains only `https://saraviasoftware.com/`.
+- `public/favicon.svg` uses the brand symbol; `public/apple-touch-icon.png` reuses the supplied official logo.
+- **Before sharing the site:** create `public/og-image.jpg` with an official Saravia Software design at 1200 × 630 pixels. The metadata already points to `https://saraviasoftware.com/og-image.jpg`; social previews will not have an image until that file is published.
 
-Las ilustraciones del hero y los ejemplos están dibujadas con HTML, SVG y CSS. Las fuentes DM Sans, Manrope y Geist Mono se cargan desde Google Fonts. WhatsApp e Instagram están enlazados con sus direcciones oficiales en `src/config.ts`.
+The hero and example illustrations are built with HTML, SVG, and CSS. DM Sans, Manrope, and Geist Mono load from Google Fonts. The official WhatsApp and Instagram URLs are configured in `src/config.ts`.
 
 ## Vercel
 
-Importá este directorio como proyecto Vite. El comando de compilación es `npm run build` y el directorio de salida es `dist`.
+Import this directory as a Vite project. Use `npm run build` as the build command and `dist` as the output directory.
 
 ## Google Search Console Setup
 
-1. Desplegá la aplicación en Vercel.
-2. Conectá `saraviasoftware.com` al proyecto.
-3. Verificá que `https://saraviasoftware.com/` abra correctamente con HTTPS y muestre la versión final.
-4. Agregá la propiedad de dominio `saraviasoftware.com` en Google Search Console.
-5. Verificá la propiedad, preferentemente mediante DNS si Google lo solicita. No hay un código de verificación preconfigurado.
-6. Abrí **Sitemaps** y enviá `https://saraviasoftware.com/sitemap.xml`.
-7. Usá **URL Inspection** con `https://saraviasoftware.com/` y solicitá la indexación de la home una vez publicada la versión final.
-8. Validá en producción los datos estructurados `Organization` con **Google Rich Results Test**.
+1. Deploy the site to Vercel.
+2. Connect `saraviasoftware.com` to the project.
+3. Confirm that `https://saraviasoftware.com/` loads the final version over HTTPS.
+4. Add the `saraviasoftware.com` domain property in Google Search Console.
+5. Verify ownership, preferably through DNS if Google requests it. No verification code is configured in advance.
+6. Open **Sitemaps** and submit `https://saraviasoftware.com/sitemap.xml`.
+7. Use **URL Inspection** for `https://saraviasoftware.com/` and request indexing after the final home page is live.
+8. Validate the `Organization` structured data in production with **Google Rich Results Test**.
 
-## Checklist manual después del deploy
+## Manual checklist after deployment
 
-- [ ] Publicar la imagen oficial `public/og-image.jpg` de 1200 × 630 píxeles.
-- [ ] Conectar `saraviasoftware.com` en Vercel y comprobar HTTPS.
-- [ ] Registrar y verificar el dominio en Google Search Console.
-- [ ] Enviar `/sitemap.xml` y solicitar la indexación de la home.
-- [ ] Validar `Organization` en Google Rich Results Test y revisar la vista previa social.
-# saravia-software-landing
+- [ ] Publish the official `public/og-image.jpg` image at 1200 × 630 pixels.
+- [ ] Connect `saraviasoftware.com` in Vercel and confirm HTTPS works.
+- [ ] Add and verify the domain in Google Search Console.
+- [ ] Submit `/sitemap.xml` and request indexing for the home page.
+- [ ] Validate `Organization` with Google Rich Results Test and review the social preview.
