@@ -1,0 +1,82 @@
+@layer components {
+  .scroll-reveal {
+    opacity: 0;
+    translate: 0 24px;
+  }
+
+  .scroll-reveal.is-revealed {
+    animation: reveal-in 680ms cubic-bezier(.2, .7, .2, 1) var(--reveal-delay, 0ms) both;
+  }
+
+  @keyframes reveal-in {
+    to { opacity: 1; translate: 0 0; }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .hero h1, .hero-copy > p, .hero-actions {
+      animation: hero-arrive 620ms cubic-bezier(.2, .7, .2, 1) both;
+    }
+
+    .hero-copy > p { animation-delay: 160ms; }
+    .hero-actions { animation-delay: 320ms; }
+
+    @keyframes hero-arrive {
+      from { opacity: 0; translate: 0 16px; }
+      to { opacity: 1; translate: 0 0; }
+    }
+  }
+
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .service-icon {
+      transition: transform 320ms ease, background-color 320ms ease, border-color 320ms ease;
+    }
+
+    .service:hover .service-icon {
+      transform: translateY(-4px) rotate(-5deg);
+      background-color: #e8f7ff;
+      border-color: #a5dcf5;
+    }
+
+    .step::before {
+      transition: transform 320ms ease, box-shadow 320ms ease;
+    }
+
+    .step:hover::before {
+      transform: scale(1.35);
+      box-shadow: 0 0 0 5px rgba(16, 175, 255, .14);
+    }
+
+    .work-art .mini-panel {
+      transition: translate 350ms ease;
+    }
+
+    .work-card:hover .mini-panel {
+      translate: 0 -5px;
+    }
+
+    .ai-uses span, .tech-list span {
+      transition: translate 280ms ease, background-color 280ms ease, border-color 280ms ease;
+    }
+
+    .ai-uses span:hover, .tech-list span:hover {
+      translate: 0 -3px;
+      border-color: var(--blue);
+    }
+
+    .ai-uses span:hover { background-color: #183754; }
+    .tech-list span:hover { background-color: #eaf7fd; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-reveal {
+      opacity: 1;
+      translate: none;
+    }
+
+    .scroll-reveal.is-revealed { animation: none; }
+
+    .service-icon, .step::before, .work-art .mini-panel, .ai-uses span, .tech-list span {
+      transition: none;
+    }
+  }
+}

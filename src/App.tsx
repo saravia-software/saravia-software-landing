@@ -12,8 +12,10 @@ import { About } from './components/About'
 import { Benefits } from './components/Benefits'
 import { Contact } from './components/Contact'
 import { Footer } from './components/Footer'
+import { useScrollReveal } from './hooks/useScrollReveal'
 
 function App() {
+  useScrollReveal()
   const [language, setLanguage] = useState<Language>('es')
   const copy = translations[language]
 
