@@ -20,7 +20,7 @@ export function Footer({ copy }: Props) {
             </div>
             <div>
               <h3>{copy.footerSocial}</h3>
-              <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer">Instagram</a>
+              <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer">@saraviasoftware</a>
             </div>
           </div>
         </div>

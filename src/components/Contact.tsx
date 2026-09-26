@@ -17,7 +17,7 @@ export function Contact({ copy }: Props) {
             <span>{copy.contactCta}</span>
             <svg aria-hidden="true"><use href="#arrow" /></svg>
           </a>
-          <a className="contact-social-link" href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer">@saravia.co</a>
+          <a className="contact-social-link" href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer">@saraviasoftware</a>
         </div>
       </div>
     </section>
