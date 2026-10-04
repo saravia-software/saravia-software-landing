@@ -13,13 +13,19 @@ import { Benefits } from './components/Benefits'
 import { Contact } from './components/Contact'
 import { Footer } from './components/Footer'
 import { useScrollReveal } from './hooks/useScrollReveal'
+import { legalPages } from './legal'
+import { LegalPage } from './components/LegalPage'
 
-function App() {
+function App({ pathname = '/' }: { pathname?: string }) {
   useScrollReveal()
   const [language, setLanguage] = useState<Language>('es')
-  const copy = translations[language]
+  const legalPage = Object.hasOwn(legalPages, pathname) ? legalPages[pathname] : undefined
+  const pageLanguage = legalPage ? 'es' : language
+  const copy = translations[pageLanguage]
+  const homeHref = legalPage ? '/' : ''
 
   useEffect(() => {
+    if (legalPage) return
     const timer = window.setTimeout(() => {
       try {
         if (localStorage.getItem('saravia-language') === 'en') setLanguage('en')
@@ -28,11 +34,11 @@ function App() {
       }
     }, 0)
     return () => window.clearTimeout(timer)
-  }, [])
+  }, [legalPage])
 
   useEffect(() => {
-    document.documentElement.lang = language
-  }, [language])
+    document.documentElement.lang = pageLanguage
+  }, [pageLanguage])
 
   const changeLanguage = (next: Language) => {
     setLanguage(next)
@@ -55,8 +61,8 @@ function App() {
           </symbol>
         </defs>
       </svg>
-      <Navbar copy={copy} language={language} onLanguageChange={changeLanguage} />
-      <main>
+      <Navbar copy={copy} language={pageLanguage} onLanguageChange={legalPage ? undefined : changeLanguage} homeHref={homeHref} />
+      {legalPage ? <LegalPage page={legalPage} /> : <main>
         <Hero copy={copy} />
         <Intro copy={copy} />
         <Services copy={copy} />
@@ -67,8 +73,8 @@ function App() {
         <About copy={copy} />
         <Benefits copy={copy} />
         <Contact copy={copy} />
-      </main>
-      <Footer copy={copy} />
+      </main>}
+      <Footer copy={copy} homeHref={homeHref} />
     </>
   )
 }

@@ -4,10 +4,12 @@ import './index.css'
 import './styles/reference.css'
 import './styles/mobile.css'
 import './styles/motion.css'
+import './styles/legal.css'
 import App from './App.tsx'
 
 const root = document.getElementById('root')!
-const app = <StrictMode><App /></StrictMode>
+const pathname = window.location.pathname.replace(/\/+$/, '') || '/'
+const app = <StrictMode><App pathname={pathname} /></StrictMode>
 
 if (root.hasChildNodes()) {
   hydrateRoot(root, app)
