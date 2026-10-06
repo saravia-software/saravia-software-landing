@@ -1,20 +1,14 @@
-import type { ReactNode } from 'react'
-import type { Copy } from '../content'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
+import type { Copy, Language } from '../content'
 import { SectionHeader } from './SectionHeader'
+import { InventoryArt, ProfilesArt, AnalyticsArt } from './ExampleVisuals'
 
-type Props = { copy: Copy }
+type Props = { copy: Copy; language: Language }
 type ProjectCardProps = { title: string; meta: string; description: string; concept: string; children: ReactNode }
-
-const stockRows = [
-  { name: 'workMockTomato', amount: '86 kg' },
-  { name: 'workMockOrange', amount: '124 kg' },
-  { name: 'workMockApple', amount: '62 kg' },
-] as const
-const barHeights = ['39%', '62%', '48%', '74%', '56%', '85%', '100%'] as const
 
 function ProjectCard({ title, meta, description, concept, children }: ProjectCardProps) {
   return (
-    <article className="work-card">
+    <article className="work-card motion-scene" tabIndex={0}>
       {children}
       <div className="work-info">
         <span className="concept-tag">{concept}</span>
@@ -26,74 +20,57 @@ function ProjectCard({ title, meta, description, concept, children }: ProjectCar
   )
 }
 
-function MockBrowserTop({ label }: { label: string }) {
-  return <div className="mini-top"><i /><i /><i /><b>{label}</b></div>
-}
+export function Projects({ copy, language }: Props) {
+  const rail = useRef<HTMLDivElement>(null)
+  const [canScroll, setCanScroll] = useState({ previous: false, next: true })
 
-function InventoryArt({ copy }: Props) {
-  return (
-    <div className="work-art inventory" aria-hidden="true">
-      <div className="mini-panel">
-        <MockBrowserTop label="STOCK / EJEMPLO" />
-        <div className="mini-body">
-          <div className="mini-label">{copy.workMockStock}</div>
-          <div className="mini-sub">{copy.workMockLocations}</div>
-          <div className="stock-rows">
-            {stockRows.map(row => (
-              <div className="stock-row" key={row.name}>
-                <span /><span className="stock-name">{copy[row.name]}</span><small>{row.amount}</small><em />
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-      <div className="query-chip"><span>✳ AI</span>{'  '}<span>{copy.workMockAsk}</span></div>
-    </div>
-  )
-}
+  const updateControls = () => {
+    const element = rail.current
+    if (!element) return
+    const previous = element.scrollLeft > 2
+    const next = element.scrollLeft + element.clientWidth < element.scrollWidth - 2
+    setCanScroll(current => {
+      if (current.previous === previous && current.next === next) return current
+      return { previous, next }
+    })
+  }
 
-function ProfilesArt({ copy }: Props) {
-  return (
-    <div className="work-art profiles" aria-hidden="true">
-      <div className="mini-panel">
-        <div className="profile-topline"><svg className="brand-mark"><use href="#mark" /></svg><div /></div>
-        <div className="mini-body">
-          <div className="profile-header"><div className="avatar" /><div className="profile-heading"><i /><i /></div></div>
-          <div className="profile-blurb"><span /><span /><span /></div>
-          <div className="profile-action">{copy.workMockContact}</div>
-        </div>
-      </div>
-    </div>
-  )
-}
+  useEffect(() => {
+    const element = rail.current
+    if (!element) return
+    const observer = new ResizeObserver(updateControls)
+    observer.observe(element)
+    return () => observer.disconnect()
+  }, [])
 
-function AnalyticsArt({ copy }: Props) {
-  return (
-    <div className="work-art analytics" aria-hidden="true">
-      <div className="mini-panel">
-        <MockBrowserTop label="ANALYTICS" />
-        <div className="mini-body">
-          <div className="mini-label">{copy.workMockOverview}</div>
-          <div className="mini-sub">{copy.workMockInsights}</div>
-          <div className="analytics-metrics">
-            <span><i />$248.6k</span><span><i />+18.2%</span><span><i />1,284</span>
-          </div>
-          <div className="bars">{barHeights.map((height, index) => <b key={index} style={{ height }} />)}</div>
-        </div>
-      </div>
-    </div>
-  )
-}
+  const scroll = (direction: number) => {
+    const element = rail.current
+    const card = element?.firstElementChild
+    if (!element || !card) return
+    element.scrollBy({
+      left: direction * (card.getBoundingClientRect().width + 24),
+      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
+    })
+  }
 
-export function Projects({ copy }: Props) {
   return (
     <section className="section work" id="projects" aria-labelledby="work-title">
       <div className="page-container">
         <SectionHeader eyebrow={copy.workLabel} title={copy.workTitle} description={copy.workIntro} titleId="work-title" />
-        <div className="work-grid grid grid-cols-1 gap-[19px] md:grid-cols-3">
+        <div className="work-grid" ref={rail} onScroll={updateControls} role="region" aria-label={copy.workLabel} onKeyDown={event => {
+          if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
+            event.preventDefault()
+            scroll(event.key === 'ArrowRight' ? 1 : -1)
+          }
+        }}>
           <ProjectCard title={copy.workOneTitle} meta={copy.serviceMetaOne} description={copy.workOne} concept={copy.concept}><InventoryArt copy={copy} /></ProjectCard>
           <ProjectCard title={copy.workTwoTitle} meta={copy.serviceMetaTwo} description={copy.workTwo} concept={copy.concept}><ProfilesArt copy={copy} /></ProjectCard>
           <ProjectCard title={copy.workThreeTitle} meta={copy.serviceMetaThree} description={copy.workThree} concept={copy.concept}><AnalyticsArt copy={copy} /></ProjectCard>
+        </div>
+        <div className="carousel-controls">
+          <button type="button" className="carousel-arrow" disabled={!canScroll.previous} onClick={() => scroll(-1)} aria-label={language === 'es' ? 'Ejemplo anterior' : 'Previous example'}><svg aria-hidden="true"><use href="#arrow" /></svg></button>
+          <span className="carousel-line" aria-hidden="true" />
+          <button type="button" className="carousel-arrow" disabled={!canScroll.next} onClick={() => scroll(1)} aria-label={language === 'es' ? 'Ejemplo siguiente' : 'Next example'}><svg aria-hidden="true"><use href="#arrow" /></svg></button>
         </div>
       </div>
     </section>

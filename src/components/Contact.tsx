@@ -1,11 +1,13 @@
 import type { Copy } from '../content'
 import { INSTAGRAM_URL, WHATSAPP_URL } from '../config'
+import { Atmosphere } from './Atmosphere'
 
 type Props = { copy: Copy }
 
 export function Contact({ copy }: Props) {
   return (
-    <section className="contact" id="contact" aria-labelledby="contact-title">
+    <section className="contact motion-scene" id="contact" aria-labelledby="contact-title">
+      <Atmosphere particles={false} />
       <div className="page-container contact-inner">
         <div>
           <div className="eyebrow">{copy.contactLabel}</div>
@@ -13,11 +15,11 @@ export function Contact({ copy }: Props) {
           <p>{copy.contactBody}</p>
         </div>
         <div className="contact-options">
-          <a className="button button-blue" href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
+          <a className="button button-dark" href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
             <span>{copy.contactCta}</span>
             <svg aria-hidden="true"><use href="#arrow" /></svg>
           </a>
-          <a className="button button-dark" href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer">
+          <a className="button button-outline" href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer">
             <span>Instagram @saraviasoftware</span>
             <svg aria-hidden="true"><use href="#arrow" /></svg>
           </a>

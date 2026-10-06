@@ -22,7 +22,7 @@ export function Navbar({ copy, language, onLanguageChange, homeHref = '' }: Prop
   const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20)
+    const onScroll = () => setScrolled(window.scrollY > 0)
     const onResize = () => {
       if (window.innerWidth > 900) setMenuOpen(false)
     }
@@ -50,7 +50,7 @@ export function Navbar({ copy, language, onLanguageChange, homeHref = '' }: Prop
   }
 
   return (
-    <header className={`site-header${scrolled ? ' scrolled' : ''}`} id="top">
+    <header className={`site-header${scrolled ? ' scrolled' : ''}${menuOpen ? ' menu-open' : ''}`} id="top">
       <div className="page-container nav-inner">
         <Brand href={`${homeHref}#top`} onClick={() => setMenuOpen(false)} />
         <nav className={`nav-links${menuOpen ? ' open' : ''}`} id="site-nav" aria-label={language === 'en' ? 'Main navigation' : 'Navegación principal'}>

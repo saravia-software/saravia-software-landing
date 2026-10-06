@@ -4,6 +4,52 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#06162d" />
+    <script>
+      // Start a new visit or reload at the hero; preserve section and history navigation.
+      (() => {
+        const isHome = location.pathname === '/' || location.pathname === '/index.html'
+        const navigation = performance.getEntriesByType('navigation')[0]
+        const startsAtTop = isHome && (!location.hash || location.hash === '#top') && navigation?.type !== 'back_forward'
+        history.scrollRestoration = startsAtTop ? 'manual' : 'auto'
+        if (startsAtTop) {
+          window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+          let userInteracted = false
+          const inputEvents = ['pointerdown', 'touchstart', 'wheel', 'keydown']
+          const onInput = () => { userInteracted = true }
+          inputEvents.forEach(event => window.addEventListener(event, onInput, { capture: true, passive: true }))
+          // Fonts can trigger a late restoration; wait for their layout before
+          // resuming native Back/Forward scrolling inside the current document.
+          window.addEventListener('pageshow', () => {
+            document.fonts.ready.then(() => {
+              requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                  history.scrollRestoration = 'auto'
+                  // Cancel a cached restoration queued during the font swap.
+                  requestAnimationFrame(() => {
+                    if (!userInteracted && (!location.hash || location.hash === '#top')) window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+                    inputEvents.forEach(event => window.removeEventListener(event, onInput, true))
+                  })
+                })
+              })
+            })
+          }, { once: true })
+        }
+        if (!startsAtTop || matchMedia('(prefers-reduced-motion: reduce)').matches) return
+        // Prepare the entrance before the prerendered content can paint.
+        document.documentElement.dataset.entrance = 'pending'
+        // Keep the page readable if the application cannot load.
+        setTimeout(() => {
+          if (document.documentElement.dataset.entrance === 'pending') document.documentElement.dataset.entrance = 'complete'
+        }, 2200)
+      })()
+    </script>
+    <style>
+      @media (prefers-reduced-motion: no-preference) {
+        html[data-entrance='pending'] .nav-inner,
+        html[data-entrance='pending'] .hero-copy,
+        html[data-entrance='pending'] .hero-bottom { opacity: 0; }
+      }
+    </style>
     <meta name="description" content="Saravia Software crea software a medida, productos digitales y soluciones con inteligencia artificial para negocios y empresas." />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://saraviasoftware.com/" />
@@ -26,7 +72,7 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <title>Saravia Software | Software, AI &amp; Digital Products</title>
     <script type="application/ld+json">
       {

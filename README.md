@@ -25,7 +25,15 @@ The public informational pages are `/privacy`, `/terms`, and `/data-deletion`. T
 - `public/favicon.svg` uses the brand symbol; `public/apple-touch-icon.png` reuses the supplied official logo.
 - `public/og-image.png` is a 1200 × 630 social preview made from the supplied brand image. It preserves the original logo and typography, and is served at `https://saraviasoftware.com/og-image.png`.
 
-The hero and example illustrations are built with HTML, SVG, and CSS. DM Sans, Manrope, and Geist Mono load from Google Fonts. The official WhatsApp and Instagram URLs are configured in `src/config.ts`.
+The hero and example illustrations are built with HTML, SVG, and CSS. Figtree, Manrope (the existing wordmark), and Geist Mono load from Google Fonts. The official WhatsApp and Instagram URLs are configured in `src/config.ts`.
+
+The design uses the original navy (`#06162d`) and sky blue (`#10afff`) from `src/index.css`, with white and subtle tints derived from those colors. The navy hero and home navigation use white text, white stars, a sky blue halo, and sky blue primary buttons with navy labels. A gradient below the hero transitions into the white intro before its content begins. It adapts the centered hero, rotating halo, alternating services, illustrated process cards, and example carousel from the visual reference at https://smart-today-957439.framer.app/. All Spanish and English copy, conceptual example labels, links, and legal documents are retained. The original hero dashboard now illustrates the custom software service.
+
+The four-second initial entrance reveals the halo and stars over 700ms and holds the background alone for 500ms. Content then enters with long, overlapping fades: title at 1200ms, description at 1400ms, buttons at 1600ms, and the closing invitation at 1800ms. An early HTML gate prevents a flash before hydration and releases after 2.2 seconds if the application fails to load. New visits and reloads of the home page start at the hero; section links and history navigation preserve reading positions and skip the entrance. Prerendered content stays visible when JavaScript is unavailable.
+
+All surfaces use the original brand navy, with white text and sky-blue accents. The navigation is transparent at the top and gains a navy surface with blur when scrolling. Lenis smooths wheel gestures and section links while preserving native touch input, nested carousel scrolling, keyboard navigation, and browser history. It is destroyed in hidden tabs or when reduced motion is requested.
+
+The example carousel supports touch scrolling, arrow buttons, and the left/right arrow keys while a card is focused. Ambient and illustration animations pause outside the viewport and in hidden tabs. `prefers-reduced-motion` disables animation and smooth scrolling, including when the preference changes while the page is open.
 
 ## Vercel
 

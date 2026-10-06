@@ -1,67 +1,187 @@
-/* Mobile adjustments to the approved desktop composition. */
 @layer components {
   html, body, #root { min-width: 0; }
-  .page-container { min-width: 0; }
-  .hero-copy, .section-head > div, .about-grid > div, .contact-inner > div { min-width: 0; }
-  .work-card, .service, .step, .cap-item { min-width: 0; }
-  .app-heading { min-width: 0; }
+  .page-container, .hero-copy, .section-head > div, .about-grid > div, .contact-inner > div { min-width: 0; }
 
-  @media (min-width: 901px) and (max-width: 1100px) {
+  @media (max-width: 1100px) {
+    .nav-links { gap: 17px; }
+    .nav-inner { gap: 18px; }
+    .nav-actions { gap: 12px; }
     .site-header .brand-tag { display: none; }
-  }
-
-  @media (max-width: 510px) {
-    .brand-name { line-height: .95; }
-    .brand-name span { display: block; margin-left: 0; }
+    .service { gap: 48px; }
+    .service h3 { font-size: 31px; }
+    .ai-grid { padding: 42px; gap: 38px; }
+    .about-grid { gap: 50px; }
+    .app-pill { display: none; }
   }
 
   @media (max-width: 900px) {
-    .hero { min-height: calc(100svh - 76px); }
-    .nav-links {
-      display: flex;
-      visibility: hidden;
-      opacity: 0;
-      pointer-events: none;
-      transform: translateY(-8px);
-      transition: opacity .2s ease, transform .2s ease, visibility .2s;
-    }
-    .nav-links.open {
-      visibility: visible;
-      opacity: 1;
-      pointer-events: auto;
-      transform: translateY(0);
-    }
+    .page-container { width: calc(100% - 48px); }
+    :root { --header-height: 72px; }
+    .site-header .brand-tag { display: block; }
+    .nav-cta { display: none; }
+    .menu-toggle { display: flex; }
+    .nav-links { position: absolute; left: 0; right: 0; top: 100%; display: flex; flex-direction: column; align-items: stretch; gap: 0; padding: 15px 24px 24px; background: var(--navy); border-bottom: 1px solid var(--line); box-shadow: 0 15px 25px color-mix(in srgb, var(--navy) 5%, transparent); visibility: hidden; opacity: 0; pointer-events: none; transform: translateY(-8px); transition: opacity .25s, transform .3s var(--ease), visibility .25s; }
+    .nav-links.open { visibility: visible; opacity: 1; pointer-events: auto; transform: translateY(0); }
+    .nav-links a { padding: 13px 4px; font-size: 16px; }
+    .nav-links a::after { display: none; }
+    .hero h1 { font-size: clamp(48px, 7vw, 67px); }
+    .hero-grid { padding: clamp(28px, 6svh, 64px) 0; }
+    .hero-copy > p { max-width: 630px; font-size: 17px; }
+    .section { padding: 85px 0; }
+    .intro { --intro-top: 75px; padding-bottom: 30px; }
+    .section-head { margin-bottom: 55px; }
+    .services-grid { gap: 65px; }
+    .service { gap: 32px; }
+    .service-visual, .hero-stage { height: 305px; }
+    .service h3 { font-size: 29px; }
+    .service p { font-size: 15px; }
+    .app-main { padding: 16px 10px; }
+    .app-heading { font-size: 12px; }
+    .app-metric { padding: 7px; }
+    .floating-chip { font-size: 8px; }
+    .floating-code { font-size: 8px; }
+    .growth-tile { width: 110px; }
+    .service-visual .mini-body { padding: 17px; }
+    .service-visual .profile-action { width: 140px; font-size: 8px; }
+    .step { padding: 25px 25px 0; }
+    .step-art { margin-inline: -25px; padding-inline: 38px; }
+    .step h3 { font-size: 24px; }
+    .step p { font-size: 14px; }
+    .work-card { flex-basis: calc((100% - 24px) / 1.7); }
+    .work-info { padding: 25px; }
+    .work-info h3 { font-size: 25px; }
+    .ai-grid { grid-template-columns: 1fr; padding: 42px; gap: 36px; }
+    .ai-copy { max-width: 600px; }
+    .terminal { width: min(100%, 530px); margin: 0 auto; }
+    .terminal-top > span { font-size: 11px; }
+    .terminal-body { font-size: 14px; padding: 28px; }
+    .terminal-result { font-size: 13px; }
+    .cap-list { grid-template-columns: repeat(2, 1fr); }
+    .about-grid { grid-template-columns: 1fr; gap: 36px; }
+    .about-grid > div:first-child { max-width: 650px; }
+    .about-principles { grid-template-columns: repeat(2, 1fr); }
+    .principle { padding: 20px; }
+    .principle > span:last-child { font-size: 16px; }
+    .contact { padding: 95px 0; }
+    .footer-links { gap: 55px; }
+    .footer-bottom > span:last-child { width: 100%; }
   }
 
   @media (max-width: 680px) {
-    .hero-grid { min-height: 0; }
-    .app-heading { flex-wrap: wrap; }
-    .app-main { overflow: hidden; }
-    .work-card p, .service p, .step p { overflow-wrap: break-word; }
-    .contact h2 { font-size: clamp(43px, 11vw, 64px); }
-    .footer-links { flex-wrap: wrap; }
+    .page-container { width: calc(100% - 40px); }
+    html { scroll-padding-top: 95px; }
+    .brand-mark { width: 32px; height: 32px; }
+    .brand-name { font-size: 19px; }
+    .brand-tag { font-size: 7.5px; }
+    .nav-inner { gap: 12px; }
+    .nav-actions { gap: 10px; }
+    .hero-grid { padding: clamp(24px, 5svh, 48px) 0; }
+    .hero h1 { font-size: clamp(41px, 9.5vw, 58px); line-height: 1.1; letter-spacing: -.045em; margin: 25px auto 23px; }
+    .hero-copy > p { font-size: 16px; line-height: 1.7; max-width: 480px; }
+    .hero .eyebrow { font-size: 9px; padding: 7px 10px; }
+    .hero-actions { margin-top: 25px; gap: 10px; }
+    .hero-actions .button { min-height: 46px; font-size: 13px; padding: 12px 16px; }
+    .hero-note { font-size: 11px; max-width: 290px; margin: 23px auto 0; line-height: 1.6; }
+    .hero-bottom { gap: 12px; font-size: 8px; letter-spacing: .08em; }
+    .hero-bottom::before, .hero-bottom > span:last-child { width: 26px; }
+    .halo { width: min(500px, 115vw); top: 45%; }
+    .particle:nth-child(n+43) { display: none; }
+    .section { padding: 72px 0; }
+    .eyebrow { font-size: 10px; }
+    .section-head h2, .section-title { font-size: clamp(33px, 8vw, 43px); line-height: 1.13; margin-top: 22px; }
+    .section-head { margin-bottom: 42px; }
+    .section-head p { font-size: 16px; line-height: 1.7; margin-top: 18px; }
+    .intro { --intro-top: 68px; padding-bottom: 22px; }
+    .intro h2 { font-size: clamp(30px, 7.5vw, 40px); line-height: 1.18; }
+    .intro p { font-size: 16px; line-height: 1.75; }
+    .services-grid { gap: 50px; }
+    .service { grid-template-columns: 1fr; gap: 24px; }
+    .service:nth-child(even) .service-visual { order: 0; }
+    .service-visual { height: 320px; }
+    .hero-stage { height: 320px; }
+    .service-icon { width: 38px; height: 36px; margin-bottom: 16px; }
+    .service h3 { font-size: 30px; margin-bottom: 13px; }
+    .service p { font-size: 16px; line-height: 1.75; max-width: 550px; }
+    .app-main { padding: 16px 15px; }
+    .app-pill { display: inline-block; }
+    .app-heading { font-size: 14px; }
+    .app-metric { padding: 8px; }
+    .service-visual .mini-panel { width: 80%; max-width: 345px; }
+    .growth-preview { width: 86%; }
+    .growth-tile { width: 128px; }
+    .service-visual .mini-label { font-size: 14px; }
+    .assistant-preview { max-width: 370px; }
+    .process-grid { grid-template-columns: 1fr; gap: 18px; }
+    .step { padding: 26px 27px 0; }
+    .step-art { margin-inline: -27px; padding-inline: 50px; }
+    .step h3 { font-size: 26px; }
+    .step p { max-width: none; font-size: 15px; line-height: 1.75; }
+    .work-card { flex-basis: 90%; }
+    .work-art { height: 245px; padding: 25px; }
+    .work-info { padding: 25px 24px 28px; }
+    .work-info h3 { font-size: 25px; }
+    .work-info p:last-child { font-size: 15px; }
+    .work-meta { font-size: 10px; }
+    .mini-panel { max-width: 325px; }
+    .query-chip { font-size: 9px; padding: 9px 10px; right: 12px; bottom: 18px; }
+    .ai { padding: 30px 0 65px; }
+    .ai-grid { width: calc(100% - 24px); padding: 30px 22px; border-radius: 20px; gap: 30px; }
+    .ai h2 { font-size: clamp(33px, 8vw, 44px); }
+    .ai-copy p { font-size: 16px; }
+    .ai-uses { gap: 7px; }
+    .ai-uses span { font-size: 10px; padding: 7px 9px; }
+    .terminal-top { padding: 11px; }
+    .terminal-top > span { margin-left: 5px; font-size: 8px; }
+    .terminal-body { padding: 22px 17px; font-size: 11px; }
+    .terminal-result { font-size: 11px; padding: 13px; }
+    .capabilities { padding: 20px 0 50px; }
+    .capabilities > .page-container > .eyebrow { margin-bottom: 30px; }
+    .cap-list { grid-template-columns: 1fr; gap: 14px; }
+    .cap-item { padding: 24px; }
+    .cap-item small { margin-bottom: 15px; }
+    .cap-item strong { font-size: 26px; }
+    .cap-item p { font-size: 16px; }
+    .about .section-title { font-size: clamp(35px, 8vw, 44px); }
+    .about-lead { font-size: 16px; }
+    .about-principles { grid-template-columns: 1fr; }
+    .principle { padding: 22px; }
+    .principle > span:last-child { font-size: 17px; }
+    .tech { padding: 5px 0 65px; }
+    .tech-inner { padding-top: 36px; }
+    .tech-title { font-size: 23px; }
+    .tech-list { gap: 8px; }
+    .tech-list span { font-size: 12px; padding: 10px 12px; }
+    .contact { padding: 82px 0; }
+    .contact h2 { font-size: clamp(36px, 8.6vw, 49px); }
+    .contact p { font-size: 16px; }
+    .contact-options { gap: 10px; }
+    .contact-options .button { width: min(100%, 310px); font-size: 13px; }
+    .contact .halo { width: min(510px, 120vw); }
+    .footer { padding-top: 40px; }
+    .footer-main { flex-direction: column; gap: 35px; padding-bottom: 32px; }
+    .footer-links { gap: 70px; }
+    .footer-links h3 { font-size: 13px; }
+    .footer-bottom { flex-direction: column; align-items: start; gap: 19px; font-size: 10px; }
   }
 
   @media (max-width: 390px) {
-    .brand { gap: 8px; }
-    .brand-mark { width: 28px; height: 28px; }
-    .brand-name { font-size: 16px; }
-    .nav-actions { gap: 6px; }
-    .nav-inner { gap: 6px; }
-    .lang button { min-width: 28px; padding: 5px 4px; }
-    .menu-toggle { width: 44px; height: 44px; }
+    .brand { gap: 7px; }
+    .brand-mark { width: 29px; height: 29px; }
+    .brand-name { font-size: 17px; }
+    .site-header .brand-tag { font-size: 6.3px; }
+    .nav-actions { gap: 7px; }
+    .lang button { min-width: 25px; padding-inline: 4px; }
+    .hero-actions .button { width: min(100%, 285px); }
+    .hero h1 { font-size: 39px; }
     .app-pill { display: none; }
-    .app-metric { padding: 6px; }
-    .app-chart { padding: 11px 9px 7px; }
-    .floating-code { left: 0; }
-  }
-
-  @media (max-width: 639px) {
-    .step:not(:first-child) { padding-left: 0; }
-    .step { min-height: 0; padding-bottom: 5px; }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .nav-links { transition: none; }
+    .app-main { padding-inline: 10px; }
+    .app-heading { font-size: 12px; }
+    .app-metric { padding: 7px; }
+    .growth-tile { width: 110px; }
+    .work-card { flex-basis: 96%; }
+    .work-art { padding: 20px; }
+    .analytics-metrics span { padding-inline: 6px; font-size: 8px; }
+    .mini-label { font-size: 12px; }
+    .stock-row { gap: 6px; padding-inline: 7px; }
   }
 }

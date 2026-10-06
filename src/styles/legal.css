@@ -11,7 +11,7 @@
   .legal-section ul { padding-left: 24px; list-style: disc; }
   .legal-section li + li { margin-top: 6px; }
   .legal-section a { color: var(--blue-ink); text-decoration: underline; text-underline-offset: 3px; }
-  .legal-section a:hover { color: var(--navy); }
+  .legal-section a:hover { color: var(--ink); }
   .legal-note { border-top: 1px solid var(--line); padding-top: 24px; margin: 0; color: var(--muted); font-size: 13px; line-height: 1.8; }
   .footer-legal { display: flex; flex-wrap: wrap; gap: 12px 20px; }
   .footer-legal a:hover { color: var(--blue); }

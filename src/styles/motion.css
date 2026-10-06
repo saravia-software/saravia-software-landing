@@ -1,82 +1,121 @@
 @layer components {
-  .scroll-reveal {
-    opacity: 0;
-    translate: 0 24px;
+  /* Only opacity and transforms are animated in the ambient hero. */
+  @keyframes halo-turn { to { transform: rotate(360deg); } }
+  @keyframes halo-breathe { 50% { opacity: .55; transform: scale(1.08); } }
+  @keyframes particle-drift { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(var(--particle-x), var(--particle-y), 0); } }
+  @keyframes star-twinkle { 0%, 100% { opacity: calc(var(--particle-opacity) * .4); scale: .8; } 50% { opacity: var(--particle-opacity); scale: 1.15; } }
+  @keyframes preview-float { 50% { transform: translateY(-7px); } }
+  @keyframes orb-breathe { 50% { transform: scale(1.055); } }
+  @keyframes dot-breathe { 50% { opacity: .25; transform: translateY(-2px); } }
+  @keyframes response-arrive { 0%, 12%, 100% { opacity: .65; transform: translateY(5px); } 26%, 90% { opacity: 1; transform: translateY(0); } }
+  @keyframes connection-flow { to { stroke-dashoffset: -52; } }
+  @keyframes pointer-drift { 0%, 100% { transform: translate(0, 0); } 40%, 65% { transform: translate(-16px, -12px); } }
+  @keyframes selection-breathe { 50% { transform: scale(1.05); } }
+  @keyframes scan-pass { 0%, 100% { transform: translateY(0); opacity: .3; } 50% { transform: translateY(84px); opacity: .8; } }
+  @keyframes connection-dot { 50% { opacity: .3; transform: scale(.65); } }
+  @keyframes progress-fill { 0%, 100% { transform: scaleX(.65); } 45%, 80% { transform: scaleX(1); } }
+  @keyframes bar-breathe { 50% { transform: scaleY(.88); } }
+  @keyframes cursor-blink { 50% { opacity: 0; } }
+
+  /* IntersectionObserver pauses loops outside the viewport and in hidden tabs. */
+  .motion-scene *, .motion-scene::before, .motion-scene::after { animation-play-state: paused; }
+  .motion-scene[data-motion-active='true'] *, .motion-scene[data-motion-active='true']::before, .motion-scene[data-motion-active='true']::after { animation-play-state: running; }
+  .scroll-reveal { opacity: 0; translate: var(--reveal-x, 0px) var(--reveal-y, 38px); scale: var(--reveal-scale, 1); }
+  .scroll-reveal.is-revealed { animation: reveal-in 900ms var(--ease) var(--reveal-delay, 0ms) both; }
+  .service-visual { --reveal-x: -38px; --reveal-y: 16px; --reveal-scale: .97; }
+  .service-content { --reveal-x: 32px; --reveal-y: 18px; }
+  .service:nth-child(even) .service-visual { --reveal-x: 38px; }
+  .service:nth-child(even) .service-content { --reveal-x: -32px; }
+  .step, .work-card, .cap-item { --reveal-y: 42px; --reveal-scale: .98; }
+  :root[data-motion-paused='true'] .scroll-reveal { animation-play-state: paused; }
+  @keyframes reveal-in { to { opacity: 1; translate: 0 0; scale: 1; } }
+
+  @media (max-width: 680px) {
+    .service .service-visual, .service .service-content,
+    .service:nth-child(even) .service-visual, .service:nth-child(even) .service-content {
+      --reveal-x: 0px;
+      --reveal-y: 30px;
+    }
   }
 
-  .scroll-reveal.is-revealed {
-    animation: reveal-in 680ms cubic-bezier(.2, .7, .2, 1) var(--reveal-delay, 0ms) both;
-  }
-
-  @keyframes reveal-in {
-    to { opacity: 1; translate: 0 0; }
+  @media (min-width: 681px) and (max-width: 900px) {
+    .service .service-visual { --reveal-x: -18px; }
+    .service .service-content { --reveal-x: 16px; }
+    .service:nth-child(even) .service-visual { --reveal-x: 18px; }
+    .service:nth-child(even) .service-content { --reveal-x: -16px; }
   }
 
   @media (prefers-reduced-motion: no-preference) {
-    .hero h1, .hero-copy > p, .hero-actions {
-      animation: hero-arrive 620ms cubic-bezier(.2, .7, .2, 1) both;
+    :root { --entrance-ease: cubic-bezier(.33, 0, .67, 1); }
+    /* The early HTML gate avoids a visible-to-hidden flash during hydration.
+       Longhands keep the ambient visibility observer in control of play-state. */
+    :root[data-entrance='playing'] .nav-inner,
+    :root[data-entrance='playing'] .hero-copy > .eyebrow,
+    :root[data-entrance='playing'] .hero-title-word,
+    :root[data-entrance='playing'] .hero-copy > p,
+    :root[data-entrance='playing'] .hero-actions,
+    :root[data-entrance='playing'] .hero-note,
+    :root[data-entrance='playing'] .hero-bottom {
+      animation-name: hero-arrive;
+      animation-duration: var(--entrance-duration, 1500ms);
+      animation-timing-function: var(--entrance-ease);
+      animation-delay: var(--entrance-delay, 0ms);
+      animation-fill-mode: both;
     }
-
-    .hero-copy > p { animation-delay: 160ms; }
-    .hero-actions { animation-delay: 320ms; }
-
+    /* Ambient: 0–700ms, then 500ms alone. Content overlaps from 1200ms:
+       title, description (+200ms), buttons (+200ms), and note. End: 4000ms. */
+    .nav-inner { --entrance-delay: 1200ms; --entrance-duration: 1400ms; --entrance-y: -18px; }
+    .hero-copy > .eyebrow { --entrance-delay: 1200ms; --entrance-duration: 1400ms; }
+    .hero-title-word { --entrance-duration: 1400ms; --entrance-y: 24px; --entrance-blur: 4px; }
+    .hero-copy > p { --entrance-delay: 1400ms; --entrance-y: 18px; --entrance-blur: 2px; }
+    .hero-actions { --entrance-delay: 1600ms; --entrance-y: 16px; }
+    .hero-bottom { --entrance-delay: 1800ms; --entrance-y: 12px; }
+    .hero-note { --entrance-delay: 1800ms; --entrance-duration: 2200ms; --entrance-y: 12px; }
+    :root[data-entrance='playing'] .hero .halo {
+      animation-name: halo-arrive;
+      animation-duration: 700ms;
+      animation-timing-function: var(--entrance-ease);
+      animation-fill-mode: both;
+    }
+    :root[data-entrance='playing'] .hero .particles {
+      animation-name: particles-arrive;
+      animation-duration: 700ms;
+      animation-timing-function: var(--entrance-ease);
+      animation-fill-mode: both;
+    }
+    :root[data-motion-paused='true'] .nav-inner { animation-play-state: paused; }
     @keyframes hero-arrive {
-      from { opacity: 0; translate: 0 16px; }
-      to { opacity: 1; translate: 0 0; }
+      from { opacity: 0; translate: 0 var(--entrance-y, 32px); filter: blur(var(--entrance-blur, 0px)); }
+      to { opacity: 1; translate: 0 0; filter: blur(0); }
     }
+    @keyframes halo-arrive { from { opacity: 0; scale: .78; } to { opacity: 1; scale: 1; } }
+    @keyframes particles-arrive { from { opacity: 0; } to { opacity: 1; } }
   }
 
-  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
-    .service-icon {
-      transition: transform 320ms ease, background-color 320ms ease, border-color 320ms ease;
-    }
-
-    .service:hover .service-icon {
-      transform: translateY(-4px) rotate(-5deg);
-      background-color: #e8f7ff;
-      border-color: #a5dcf5;
-    }
-
-    .step::before {
-      transition: transform 320ms ease, box-shadow 320ms ease;
-    }
-
-    .step:hover::before {
-      transform: scale(1.35);
-      box-shadow: 0 0 0 5px rgba(16, 175, 255, .14);
-    }
-
-    .work-art .mini-panel {
-      transition: translate 350ms ease;
-    }
-
-    .work-card:hover .mini-panel {
-      translate: 0 -5px;
-    }
-
-    .ai-uses span, .tech-list span {
-      transition: translate 280ms ease, background-color 280ms ease, border-color 280ms ease;
-    }
-
-    .ai-uses span:hover, .tech-list span:hover {
-      translate: 0 -3px;
-      border-color: var(--blue);
-    }
-
-    .ai-uses span:hover { background-color: #183754; }
-    .tech-list span:hover { background-color: #eaf7fd; }
+  @media (hover: hover) {
+    .button:hover { transform: translateY(-2px); }
+    .button-dark:hover { background: color-mix(in srgb, var(--blue) 88%, white); box-shadow: 0 6px 28px color-mix(in srgb, var(--blue) 25%, transparent); }
+    .button-outline:hover { background: var(--soft); }
+    .hero .button-outline:hover { background: color-mix(in srgb, var(--blue) 12%, var(--navy)); }
+    .button:hover svg { transform: translate(2px, -1px); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+    .lang button:hover:not(.active) { background: var(--soft); }
+    .service:hover .service-visual { border-color: color-mix(in srgb, var(--blue) 55%, var(--navy)); box-shadow: 0 12px 35px color-mix(in srgb, var(--blue) 8%, transparent); }
+    .service-icon { transition: transform .4s var(--ease); }
+    .service:hover .service-icon { transform: translateY(-3px); }
+    .work-card:hover, .cap-item:hover { border-color: var(--blue-line); box-shadow: 0 8px 24px color-mix(in srgb, var(--blue) 8%, transparent); }
+    .ai-uses span, .tech-list span { transition: transform .3s var(--ease), border-color .3s; }
+    .ai-uses span:hover, .tech-list span:hover { transform: translateY(-2px); border-color: var(--blue); }
+    .carousel-arrow:hover:not(:disabled) { background: var(--soft); border-color: var(--blue); }
+    .footer-links a:hover, .footer-legal a:hover { text-decoration: underline; }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .scroll-reveal {
-      opacity: 1;
-      translate: none;
-    }
-
-    .scroll-reveal.is-revealed { animation: none; }
-
-    .service-icon, .step::before, .work-art .mini-panel, .ai-uses span, .tech-list span {
-      transition: none;
-    }
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .scroll-reveal { opacity: 1; translate: none; scale: 1; }
+    .hero .halo, .hero .particles { translate: none; }
+    .preview-response { opacity: 1; }
+    .button:hover, .button:hover svg, .service:hover .service-icon, .ai-uses span:hover, .tech-list span:hover { transform: none; }
   }
 }

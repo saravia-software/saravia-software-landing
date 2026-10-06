@@ -9,8 +9,8 @@
   --color-muted: #59687a;
   --color-soft: #f8fafc;
   --color-line: #e3e9ef;
-  --font-body: 'DM Sans', Arial, sans-serif;
-  --font-display: Manrope, Arial, sans-serif;
+  --font-body: Figtree, Arial, sans-serif;
+  --font-display: Figtree, Arial, sans-serif;
   --font-mono: 'Geist Mono', ui-monospace, monospace;
   --radius-card: 17px;
   --shadow-window: 0 30px 80px rgba(6, 22, 45, .16), 0 2px 9px rgba(6, 22, 45, .05);

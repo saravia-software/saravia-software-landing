@@ -7,14 +7,14 @@ const useKeys = ['aiUseOne', 'aiUseTwo', 'aiUseThree', 'aiUseFour', 'aiUseFive']
 export function AISection({ copy }: Props) {
   return (
     <section className="ai" id="ai" aria-labelledby="ai-title">
-      <div className="page-container ai-grid grid grid-cols-1 md:grid-cols-2">
+      <div className="page-container ai-grid">
         <div className="ai-copy">
           <div className="eyebrow">{copy.aiLabel}</div>
           <h2 id="ai-title"><span>{copy.aiOne}</span><br /><span>{copy.aiTwo}</span></h2>
           <p>{copy.aiBody}</p>
           <div className="ai-uses">{useKeys.map(key => <span key={key}>{copy[key]}</span>)}</div>
         </div>
-        <div className="terminal" aria-hidden="true">
+        <div className="terminal motion-scene" aria-hidden="true">
           <div className="terminal-top"><i /><i /><i /><span>{copy.terminalTop}</span></div>
           <div className="terminal-body">
             <span className="prompt">&gt;_</span>{' '}<span className="question">{copy.terminalQuestion}</span>

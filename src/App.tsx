@@ -13,11 +13,15 @@ import { Benefits } from './components/Benefits'
 import { Contact } from './components/Contact'
 import { Footer } from './components/Footer'
 import { useScrollReveal } from './hooks/useScrollReveal'
+import { useHeroEntrance } from './hooks/useHeroEntrance'
+import { useSmoothScroll } from './hooks/useSmoothScroll'
 import { legalPages } from './legal'
 import { LegalPage } from './components/LegalPage'
 
 function App({ pathname = '/' }: { pathname?: string }) {
+  useHeroEntrance()
   useScrollReveal()
+  useSmoothScroll()
   const [language, setLanguage] = useState<Language>('es')
   const legalPage = Object.hasOwn(legalPages, pathname) ? legalPages[pathname] : undefined
   const pageLanguage = legalPage ? 'es' : language
@@ -66,10 +70,10 @@ function App({ pathname = '/' }: { pathname?: string }) {
         <Hero copy={copy} />
         <Intro copy={copy} />
         <Services copy={copy} />
-        <Capabilities copy={copy} />
         <Process copy={copy} />
-        <Projects copy={copy} />
+        <Projects copy={copy} language={pageLanguage} />
         <AISection copy={copy} />
+        <Capabilities copy={copy} />
         <About copy={copy} />
         <Benefits copy={copy} />
         <Contact copy={copy} />

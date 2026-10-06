@@ -1,6 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot, hydrateRoot } from 'react-dom/client'
 import { Analytics } from '@vercel/analytics/react'
+import 'lenis/dist/lenis.css'
 import './index.css'
 import './styles/reference.css'
 import './styles/mobile.css'
